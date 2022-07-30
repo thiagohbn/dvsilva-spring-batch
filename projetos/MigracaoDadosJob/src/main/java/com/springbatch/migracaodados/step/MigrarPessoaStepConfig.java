@@ -16,6 +16,12 @@ public class MigrarPessoaStepConfig {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
+    /**
+     * @param arquivoPessoaReader
+     * @param pessoaClassifierWriter
+     * @param arquivoPessoasInvalidasWriter
+     * @return StepBuilderFactory
+     */
     @Bean
     public Step migrarPessoaStep(ItemReader<Pessoa> arquivoPessoaReader, ClassifierCompositeItemWriter<Pessoa> pessoaClassifierWriter, FlatFileItemWriter<Pessoa> arquivoPessoasInvalidasWriter) {
 
@@ -24,7 +30,7 @@ public class MigrarPessoaStepConfig {
                 .<Pessoa, Pessoa>chunk(10000)
                 .reader(arquivoPessoaReader)
                 .writer(pessoaClassifierWriter)
-                // registrar todo escritor stream que estiver sendo usado no classificador
+                // registrar todo_ escritor stream que estiver sendo usado no classificador
                 // controle do ciclo de vida de abertura e fechamento da streams nao e feita com classificador
                 // nao implementa a classe ItemStream
                 .stream(arquivoPessoasInvalidasWriter)

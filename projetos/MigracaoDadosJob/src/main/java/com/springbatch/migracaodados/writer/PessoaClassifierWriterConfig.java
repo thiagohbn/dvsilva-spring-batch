@@ -1,5 +1,6 @@
 package com.springbatch.migracaodados.writer;
 
+import com.springbatch.migracaodados.dominio.Pessoa;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemWriter;
@@ -9,8 +10,9 @@ import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.springbatch.migracaodados.dominio.Pessoa;
-
+/**
+ * Classifica o dado como válido (escreve no banco de dados) ou inválido (escreve no arquivo de dados inválidos).
+ */
 @Configuration
 public class PessoaClassifierWriterConfig {
 	

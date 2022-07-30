@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 /**
- * Classe responsável por configurar o leitor do arquivo dados_bancarios.csv
+ * Responsável por configurar o leitor do arquivo 'dados_bancarios.csv'.
  */
 @Configuration
 public class ArquivoDadosBancariosReaderConfig {

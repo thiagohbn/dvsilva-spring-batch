@@ -11,10 +11,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MigrarDadosBancariosStepConfig {
-	
+
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
+	/**
+	 * @param arquivoDadosBancariosReader
+	 * @param bancoDadosBancariosWriter
+	 * @return StepBuilderFactory
+	 */
 	@Bean
 	public Step migrarDadosBancariosStep(ItemReader<DadosBancarios> arquivoDadosBancariosReader, ItemWriter<DadosBancarios> bancoDadosBancariosWriter) {
 
