@@ -7,18 +7,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
+/**
+ * Classe responsável por configurar o leitor do arquivo dados_bancarios.csv
+ */
 @Configuration
 public class ArquivoDadosBancariosReaderConfig {
-	
+
 	@Bean
 	public FlatFileItemReader<DadosBancarios> dadosBancariosReader() {
+
 		return new FlatFileItemReaderBuilder<DadosBancarios>()
 				.name("dadosBancariosReader")
 				.resource(new FileSystemResource("projetos/MigracaoDadosJob/files/dados_bancarios.csv"))
 				.delimited()
 				.names("pessoaId", "agencia", "conta", "banco", "id")
 				.addComment("--")
-				.targetType(DadosBancarios.class)
+				.targetType(DadosBancarios.class) //Não contém campos complexos, só primitivos, por isso pode ser mapeado diretamente via targetType
 				.build();
 	}
 }

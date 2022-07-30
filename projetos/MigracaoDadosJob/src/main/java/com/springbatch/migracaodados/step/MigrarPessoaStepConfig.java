@@ -18,6 +18,7 @@ public class MigrarPessoaStepConfig {
 
     @Bean
     public Step migrarPessoaStep(ItemReader<Pessoa> arquivoPessoaReader, ClassifierCompositeItemWriter<Pessoa> pessoaClassifierWriter, FlatFileItemWriter<Pessoa> arquivoPessoasInvalidasWriter) {
+
         return stepBuilderFactory
                 .get("migrarPessoaStep")
                 .<Pessoa, Pessoa>chunk(10000)

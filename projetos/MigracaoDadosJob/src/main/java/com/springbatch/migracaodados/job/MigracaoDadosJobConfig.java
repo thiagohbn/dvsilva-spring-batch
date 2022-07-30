@@ -21,10 +21,8 @@ public class MigracaoDadosJobConfig {
     private JobBuilderFactory jobBuilderFactory;
 
     @Bean
-    public Job migracaoDadosJob(
-            //Qualificadores necessários quando existe mais bean para ser injetado
-            @Qualifier("migrarPessoaStep") Step migrarPessoaStep,
-            @Qualifier("migrarDadosBancariosStep") Step migrarDadosBancariosStep) {
+    public Job migracaoDadosJob(@Qualifier("migrarPessoaStep") Step migrarPessoaStep, @Qualifier("migrarDadosBancariosStep") Step migrarDadosBancariosStep) {
+
         return jobBuilderFactory
                 .get("migracaoDadosJob")
                 .start(stepsParalelos(migrarPessoaStep, migrarDadosBancariosStep))
@@ -34,16 +32,15 @@ public class MigracaoDadosJobConfig {
     }
 
     private Flow stepsParalelos(Step migrarPessoaStep, Step migrarDadosBancariosStep) {
+
         Flow migrarDadosBancariosFlow = new FlowBuilder<Flow>("migrarDadosBancariosFlow")
                 .start(migrarDadosBancariosStep)
                 .build();
 
-        Flow stepsParalelos = new FlowBuilder<Flow>("stepsParalelosFlow")
+        return new FlowBuilder<Flow>("stepsParalelosFlow")
                 .start(migrarPessoaStep)
                 .split(new SimpleAsyncTaskExecutor()) // divide a tarefa em paralelo [cuida das threads]
                 .add(migrarDadosBancariosFlow)
                 .build();
-
-        return stepsParalelos;
     }
 }
