@@ -13,36 +13,37 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
-@EnableBatchProcessing
+@EnableBatchProcessing //Necessário para injetar o JobBuilderFactory
 @Configuration
 public class MigracaoDadosJobConfig {
-	
-	@Autowired
-	private JobBuilderFactory jobBuilderFactory;
-	
-	@Bean
-	public Job migracaoDadosJob(
-			@Qualifier("migrarPessoaStep")  Step migrarPessoaStep,
-			@Qualifier("migrarDadosBancariosStep") Step migrarDadosBancariosStep) {
-		return jobBuilderFactory
-				.get("migracaoDadosJob")
-				.start(stepsParalelos(migrarPessoaStep, migrarDadosBancariosStep))
-				.end()
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
 
-	private Flow stepsParalelos(Step migrarPessoaStep, Step migrarDadosBancariosStep) {
-		Flow migrarDadosBancariosFlow = new FlowBuilder<Flow>("migrarDadosBancariosFlow")
-				.start(migrarDadosBancariosStep)
-				.build();
-		
-		Flow stepsParalelos = new FlowBuilder<Flow>("stepsParalelosFlow")
-				.start(migrarPessoaStep)
-				.split(new SimpleAsyncTaskExecutor()) // divide a tarefa em paralelo [cuida das threads]
-				.add(migrarDadosBancariosFlow)
-				.build();
-		
-		return stepsParalelos;
-	}
+    @Autowired
+    private JobBuilderFactory jobBuilderFactory;
+
+    @Bean
+    public Job migracaoDadosJob(
+            //Qualificadores necessários quando existe mais bean para ser injetado
+            @Qualifier("migrarPessoaStep") Step migrarPessoaStep,
+            @Qualifier("migrarDadosBancariosStep") Step migrarDadosBancariosStep) {
+        return jobBuilderFactory
+                .get("migracaoDadosJob")
+                .start(stepsParalelos(migrarPessoaStep, migrarDadosBancariosStep))
+                .end()
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
+
+    private Flow stepsParalelos(Step migrarPessoaStep, Step migrarDadosBancariosStep) {
+        Flow migrarDadosBancariosFlow = new FlowBuilder<Flow>("migrarDadosBancariosFlow")
+                .start(migrarDadosBancariosStep)
+                .build();
+
+        Flow stepsParalelos = new FlowBuilder<Flow>("stepsParalelosFlow")
+                .start(migrarPessoaStep)
+                .split(new SimpleAsyncTaskExecutor()) // divide a tarefa em paralelo [cuida das threads]
+                .add(migrarDadosBancariosFlow)
+                .build();
+
+        return stepsParalelos;
+    }
 }
