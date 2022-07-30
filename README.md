@@ -36,6 +36,6 @@ Projeto 6 - Conta Bancária - Job responsável por realizar a leitura dos dados 
 
 ## :phone: Contato
 
-<img src="https://github.com/paulrobertlloyd/socialmediaicons/blob/main/linkedin-16x16.png?raw=true" /> Linkedin [https://www.linkedin.com/in/danyllo-valente-da-silva-3569b460](https://www.linkedin.com/in/danyllo-valente-da-silva-3569b460)
+<img src="https://github.com/paulrobertlloyd/socialmediaicons/blob/main/linkedin-16x16.png?raw=true" /> Linkedin [https://www.linkedin.com/in/thiagohbnunes/](https://www.linkedin.com/in/thiagohbnunes/)
 
-:postbox: E-mail [danyllo.dvs@gmail.com](danyllo.dvs@gmail.com)
+:postbox: E-mail [thiagohenri19@gmail.com](thiagohenri19@gmail.com)
